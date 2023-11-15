@@ -53,6 +53,15 @@ http {
           # we don't want nginx trying to do something clever with
           # redirects, we set the Host: header above already.
           proxy_redirect off;
+
+          add_header Access-Control-Allow-Origin * always;
+          add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS';
+          add_header Access-Control-Allow-Headers 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization';
+
+          if ($request_method = 'OPTIONS') {
+              return 204;
+          }
+
           # They default to 60s. Increase to avoid WORKER TIMEOUT in web container
           proxy_connect_timeout 60s;
           proxy_read_timeout 60s;
